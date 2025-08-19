@@ -5,7 +5,6 @@ const assert = require('node:assert')
 const Blog = require('../models/blog')
 const mongoose = require('mongoose')
 const helper = require('./test-helper')
-const { filter } = require('lodash')
 
 const api = supertest(app)
 
@@ -103,7 +102,7 @@ describe('delete requests', () => {
 		const titles = blogsAtEnd.map((blog) => blog.title)
 		assert(!titles.includes(blogToDelete.title))
 
-		assert.strictEqual(blogsAtEnd.length, helper.blogs.length - 1)
+		assert.strictEqual(blogsAtEnd.length, blogsAtStart.length - 1)
 	})
 })
 
@@ -128,7 +127,7 @@ describe('update/put requests', () => {
 			.expect('Content-Type', /application\/json/)
 
 		const blogsAtEnd = await helper.blogsInDb()
-		assert.strictEqual(blogsAtEnd.length, helper.blogs.length)
+		assert.strictEqual(blogsAtEnd.length, blogsAtStart.length)
 	})
 })
 
